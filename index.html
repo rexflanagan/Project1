@@ -1,0 +1,26 @@
+library(igraph)
+library(ggplot2)
+library(ggnetwork)
+library(plotly)
+
+df <- read.table("/Users/RexFl/OneDrive/Documents/DATA340/higgs-retweet_network.edgelist")
+
+ig <- graph_from_data_frame(df)
+
+ig
+
+degs <- data.frame(ind=(ig %>% degree(mode="in") %>% log(base = 10) ))
+degs$outd <- ig %>% degree(mode="out")
+in_hist <- ggplot(degs, aes(x=ind)) + geom_histogram()
+ggplotly(in_hist, text=ind)
+mean(degs$outd)
+
+ebs_df <- data.frame(ebs=edge_betweenness(ig))
+g <- ggplot(ebs_df) + geom_histogram(aes(x=log(ebs,base=10)))
+ggplotly(g)
+
+subg <- subgraph.edges(ig,1:500,delete.vertices = T)
+tiny_g <- ggnetwork(subg, arrow.gap=0,layout=nicely())
+tg <- ggplot(tiny_g,aes(x=x,y=y,xend=xend,yend=yend)) + geom_nodes()
+tg <- tg + geom_edges(arrow=arrow(length=unit(4,"pt")))
+tg
