@@ -23,4 +23,4 @@ subg <- subgraph.edges(ig,1:500,delete.vertices = T)
 tiny_g <- ggnetwork(subg, arrow.gap=0,layout=nicely())
 tg <- ggplot(tiny_g,aes(x=x,y=y,xend=xend,yend=yend)) + geom_nodes()
 tg <- tg + geom_edges(arrow=arrow(length=unit(4,"pt")))
-tg
+View(tg)
