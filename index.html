@@ -3,7 +3,7 @@ library(ggplot2)
 library(ggnetwork)
 library(plotly)
 
-df <- read.table("data/higgs-retweet_network.edgelist")
+df <- read.table("main/higgs-retweet_network.edgelist")
 
 ig <- graph_from_data_frame(df)
 
